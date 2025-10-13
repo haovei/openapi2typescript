@@ -17,7 +17,7 @@ import type {
 import { join } from 'path';
 import ReservedDict from 'reserved-words';
 import rimraf from 'rimraf';
-import pinyin from 'tiny-pinyin';
+import { pinyin } from 'pinyin-pro';
 import numberToWords from 'number-to-words';
 import type { GenerateServiceProps } from './index';
 import Log from './log';
@@ -106,7 +106,7 @@ const resolveTypeName = (typeName: string) => {
     return name;
   }
   const noBlankName = name.replace(/ +/g, '');
-  return pinyin.convertToPinyin(noBlankName, '', true);
+  return pinyin(noBlankName, { toneType: 'none' }).replace(/ /g, '');
 };
 
 function getRefName(refObject: any): string {

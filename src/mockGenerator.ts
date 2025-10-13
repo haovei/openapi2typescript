@@ -4,7 +4,7 @@ import { prettierFile, writeFile } from './util';
 import { dirname, join } from 'path';
 import OpenAPIParserMock from './openAPIParserMock/index';
 import Log from './log';
-import pinyin from 'tiny-pinyin';
+import { pinyin } from 'pinyin-pro';
 import { GenerateServiceProps } from './index';
 Mock.Random.extend({
   country() {
@@ -198,7 +198,7 @@ const mockGenerator = async ({ openAPI, mockFolder, mockConfig }: genMockDataSer
           path.replace('/', '').split('/')[1]
         )?.replace(/[^\w^\s^\u4e00-\u9fa5]/gi, '');
         if (/[\u3220-\uFA29]/.test(conte)) {
-          conte = pinyin.convertToPinyin(conte, '', true);
+          conte = pinyin(conte, { toneType: 'none' }).replace(/ /g, '');
         }
         if (!conte) {
           return;
