@@ -15,6 +15,9 @@
     "dist",
     "templates"
   ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "localConvert4Project": "rm -rf ./test/servers/ ./test/file-servers/ &&  npm run build && cd ./test && node ./test.js && cd .. && rm -rf /Users/fd/wj/psp-web-pro/src/services/wj && mv ./test/servers/api/  /Users/fd/wj/psp-web-pro/src/services/wj",
@@ -26,11 +29,9 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "cosmiconfig": "^9.0.0",
-    "dayjs": "^1.10.3",
     "glob": "^7.1.6",
     "lodash": "^4.17.21",
     "memoizee": "^0.4.15",
-    "mock.js": "^0.2.0",
     "mockjs": "^1.1.0",
     "node-fetch": "^2.6.1",
     "number-to-words": "^1.2.4",
