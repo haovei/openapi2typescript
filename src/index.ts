@@ -2,7 +2,6 @@
 /* eslint-disable import/no-dynamic-require */
 import http from 'http';
 import https from 'https';
-import fetch from 'node-fetch';
 import type { OpenAPIObject, OperationObject, SchemaObject } from 'openapi3-ts';
 import converter from 'swagger2openapi';
 import Log from './log';
@@ -197,10 +196,15 @@ export const getSchema = async (schemaPath: string, authorization?: string) => {
       const agent = new protocol.Agent({
         rejectUnauthorized: false,
       });
-      const headers = {
-        authorization,
-      };
-      const json = await fetch(schemaPath, { agent, headers: authorization? headers: {} }).then((rest) => rest.json());
+      const headers: Record<string, string> = {};
+      if (authorization) {
+        headers.authorization = authorization;
+      }
+      // Node.js 18+ native fetch supports dispatcher option for custom agents
+      const json = await fetch(schemaPath, { 
+        headers,
+        dispatcher: agent
+      } as any).then((rest) => rest.json());
       return json;
     } catch (error) {
       // eslint-disable-next-line no-console
