@@ -109,11 +109,11 @@ const gen = async () => {
   //   serversPath: './servers',
   //   mockFolder: './mocks',
   // });
-  // await openAPI.generateService({
-  //   schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/Zd7dLTHUjE/ant-design-pro.json',
-  //   serversPath: './servers',
-  //   mockFolder: './mocks',
-  // });
+  await openAPI.generateService({
+    schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/Zd7dLTHUjE/ant-design-pro.json',
+    serversPath: './servers',
+    mockFolder: './mocks',
+  });
   // await openAPI.generateService({
   //   schemaPath: `${__dirname}/morse-api.json`,
   //   serversPath: './servers',

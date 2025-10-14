@@ -193,18 +193,36 @@ export const getSchema = async (schemaPath: string, authorization?: string) => {
   if (schemaPath.startsWith('http')) {
     const protocol = schemaPath.startsWith('https:') ? https : http;
     try {
-      const agent = new protocol.Agent({
-        rejectUnauthorized: false,
+      const json = await new Promise((resolve, reject) => {
+        const agent = new protocol.Agent({
+          rejectUnauthorized: false,
+        });
+        const options: any = {
+          agent,
+        };
+        if (authorization) {
+          options.headers = {
+            authorization,
+          };
+        }
+        protocol
+          .get(schemaPath, options, (res) => {
+            let data = '';
+            res.on('data', (chunk) => {
+              data += chunk;
+            });
+            res.on('end', () => {
+              try {
+                resolve(JSON.parse(data));
+              } catch (e) {
+                reject(e);
+              }
+            });
+          })
+          .on('error', (err) => {
+            reject(err);
+          });
       });
-      const headers: Record<string, string> = {};
-      if (authorization) {
-        headers.authorization = authorization;
-      }
-      // Node.js 18+ native fetch supports dispatcher option for custom agents
-      const json = await fetch(schemaPath, { 
-        headers,
-        dispatcher: agent
-      } as any).then((rest) => rest.json());
       return json;
     } catch (error) {
       // eslint-disable-next-line no-console
