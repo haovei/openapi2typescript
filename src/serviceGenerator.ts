@@ -556,12 +556,12 @@ class ServiceGenerator {
 
                 if (prefix.startsWith("'") || prefix.startsWith('"') || prefix.startsWith('`')) {
                   const finalPrefix = prefix.slice(1, prefix.length - 1);
-                  if (
-                    formattedPath.startsWith(finalPrefix) ||
-                    formattedPath.startsWith(`/${finalPrefix}`)
-                  ) {
-                    return formattedPath;
-                  }
+                  // if (
+                  //   formattedPath.startsWith(finalPrefix) ||
+                  //   formattedPath.startsWith(`/${finalPrefix}`)
+                  // ) {
+                  //   return formattedPath;
+                  // }
                   return `${finalPrefix}${formattedPath}`;
                 }
                 // prefix 变量
